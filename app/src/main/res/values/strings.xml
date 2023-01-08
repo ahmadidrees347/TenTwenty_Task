@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TenTwenty Task</string>
+    <string name="get_tickets">Get Tickets</string>
+    <string name="watch_trailer">Watch Trailer</string>
+    <string name="overview">Overview</string>
+    <string name="search_here">Search Here</string>
+    <string name="more">More</string>
+    <string name="library">Library</string>
+    <string name="watch">Watch</string>
+    <string name="dashboard">Dashboard</string>
+</resources>
