@@ -5,14 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.ten.twenty.task.model.MovieDetailState
 import com.ten.twenty.task.model.MovieState
 import com.ten.twenty.task.model.MovieTrailerState
-import com.ten.twenty.task.repository.MoviesRepo
+import com.ten.twenty.task.repository.MoviesRepoImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class MoviesViewModel(private val moviesRepo: MoviesRepo) : ViewModel() {
+class MoviesViewModel(private val moviesRepoImpl: MoviesRepoImpl) : ViewModel() {
 
     private val _moviesData =
         MutableStateFlow<MovieState>(MovieState.Empty)
@@ -29,7 +29,7 @@ class MoviesViewModel(private val moviesRepo: MoviesRepo) : ViewModel() {
 
     fun getAllMovies() =
         viewModelScope.launch {
-            moviesRepo.getAllMovies()
+            moviesRepoImpl.getAllMovies()
                 .onStart {
                     _moviesData.value = MovieState.Loading
                 }
@@ -43,7 +43,7 @@ class MoviesViewModel(private val moviesRepo: MoviesRepo) : ViewModel() {
 
     fun searchMoviesByQuery(query: String) =
         viewModelScope.launch {
-            moviesRepo.searchMoviesByQuery(query)
+            moviesRepoImpl.searchMoviesByQuery(query)
                 .onStart {
                     _moviesData.value = MovieState.Loading
                 }
@@ -57,7 +57,7 @@ class MoviesViewModel(private val moviesRepo: MoviesRepo) : ViewModel() {
 
     fun getMovieDetailById(movieId: Int) =
         viewModelScope.launch {
-            moviesRepo.getMovieDetailById(movieId)
+            moviesRepoImpl.getMovieDetailById(movieId)
                 .onStart {
                     _moviesDetailData.value = MovieDetailState.Loading
                 }
@@ -75,7 +75,7 @@ class MoviesViewModel(private val moviesRepo: MoviesRepo) : ViewModel() {
 
     fun getMovieTrailerById(movieId: Int) =
         viewModelScope.launch {
-            moviesRepo.getMovieTrailer(movieId)
+            moviesRepoImpl.getMovieTrailer(movieId)
                 .onStart {
                     _moviesTrailerData.value = MovieTrailerState.Loading
                 }

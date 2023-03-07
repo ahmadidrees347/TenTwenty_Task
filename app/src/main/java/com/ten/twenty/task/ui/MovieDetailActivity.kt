@@ -2,7 +2,9 @@ package com.ten.twenty.task.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.ten.twenty.task.databinding.ActivityMovieDetailBinding
 import com.ten.twenty.task.extension.Constants
@@ -10,6 +12,7 @@ import com.ten.twenty.task.extension.openActivity
 import com.ten.twenty.task.model.MovieDetailModel
 import com.ten.twenty.task.model.MovieDetailState
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MovieDetailActivity : BaseActivity<ActivityMovieDetailBinding>() {
@@ -30,21 +33,23 @@ class MovieDetailActivity : BaseActivity<ActivityMovieDetailBinding>() {
         if (movieId != -1) {
             moviesViewModel.getMovieDetailById(movieId)
         }
-        lifecycleScope.launchWhenResumed {
-            moviesViewModel.moviesDetailData.collectLatest {
-                when (it) {
-                    is MovieDetailState.Loading -> {
-                        Timber.tag("movieDetail*").e("*Response: Loading")
-                    }
-                    is MovieDetailState.Success -> {
-                        Timber.tag("movieDetail*").e("*Response: Success")
-                        setMovieData(it.movieModel)
-                    }
-                    is MovieDetailState.Failure -> {
-                        Timber.tag("movieDetail*").e("*Response: %s", it.error)
-                    }
-                    is MovieDetailState.Empty -> {
-                        Timber.tag("movieDetail*").e("*Response: Empty")
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                moviesViewModel.moviesDetailData.collectLatest {
+                    when (it) {
+                        is MovieDetailState.Loading -> {
+                            Timber.tag("movieDetail*").e("*Response: Loading")
+                        }
+                        is MovieDetailState.Success -> {
+                            Timber.tag("movieDetail*").e("*Response: Success")
+                            setMovieData(it.movieModel)
+                        }
+                        is MovieDetailState.Failure -> {
+                            Timber.tag("movieDetail*").e("*Response: %s", it.error)
+                        }
+                        is MovieDetailState.Empty -> {
+                            Timber.tag("movieDetail*").e("*Response: Empty")
+                        }
                     }
                 }
             }

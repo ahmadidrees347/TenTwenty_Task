@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ten.twenty.task.adapter.MovieAdapter
 import com.ten.twenty.task.databinding.FragmentMoviesBinding
@@ -12,6 +14,7 @@ import com.ten.twenty.task.extension.Constants
 import com.ten.twenty.task.extension.openActivity
 import com.ten.twenty.task.model.MovieState
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MoviesFragment : BaseFragment() {
@@ -50,21 +53,23 @@ class MoviesFragment : BaseFragment() {
 
     private fun getAllMovies() {
         moviesViewModel.getAllMovies()
-        lifecycleScope.launchWhenResumed {
-            moviesViewModel.moviesData.collectLatest {
-                when (it) {
-                    is MovieState.Loading -> {
-                        Timber.tag("movieData*").e("*Response: Loading")
-                    }
-                    is MovieState.Success -> {
-                        Timber.tag("movieData*").e("*Response: Success")
-                        movieAdapter.submitData(it.moviesList)
-                    }
-                    is MovieState.Failure -> {
-                        Timber.tag("movieData*").e("*Response: %s", it.error)
-                    }
-                    is MovieState.Empty -> {
-                        Timber.tag("movieData*").e("*Response: Empty")
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                moviesViewModel.moviesData.collectLatest {
+                    when (it) {
+                        is MovieState.Loading -> {
+                            Timber.tag("movieData*").e("*Response: Loading")
+                        }
+                        is MovieState.Success -> {
+                            Timber.tag("movieData*").e("*Response: Success")
+                            movieAdapter.submitData(it.moviesList)
+                        }
+                        is MovieState.Failure -> {
+                            Timber.tag("movieData*").e("*Response: %s", it.error)
+                        }
+                        is MovieState.Empty -> {
+                            Timber.tag("movieData*").e("*Response: Empty")
+                        }
                     }
                 }
             }

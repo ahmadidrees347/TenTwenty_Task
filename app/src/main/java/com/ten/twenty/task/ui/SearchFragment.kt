@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ten.twenty.task.adapter.MovieAdapter
 import com.ten.twenty.task.databinding.FragmentSearchBinding
@@ -50,33 +52,41 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun setListeners() {
-        lifecycleScope.launchWhenStarted {
-            launch {
-                mySharedViewModel.searchedMovie.observe(viewLifecycleOwner) { query ->
-                    Timber.tag("movieData*").e("Search $query")
-                    if (query.isNotEmpty())
-                        moviesViewModel.searchMoviesByQuery(query)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                /* mySharedViewModel.searchedMovie.observe(viewLifecycleOwner) { query ->
+                     Timber.tag("movieData*").e("Search $query")
+                     if (query.isNotEmpty())
+                         moviesViewModel.searchMoviesByQuery(query)
+                 }*/
+                launch {
+                    mySharedViewModel.searchedMovie.collect { query ->
+                        Timber.tag("movieData*").e("Search $query")
+                        if (query.isNotEmpty())
+                            moviesViewModel.searchMoviesByQuery(query)
+                    }
                 }
-            }
-            launch {
-                moviesViewModel.moviesData.collectLatest {
-                    when (it) {
-                        is MovieState.Loading -> {
-                            Timber.tag("search*").e("*Response: Loading")
-                        }
-                        is MovieState.Success -> {
-                            movieAdapter.submitData(it.moviesList)
-                            Timber.tag("search*").e("*Response: Success")
-                        }
-                        is MovieState.Failure -> {
-                            Timber.tag("search*").e("*Response: %s", it.error)
-                        }
-                        is MovieState.Empty -> {
-                            Timber.tag("search*").e("*Response: Empty")
+                launch {
+                    moviesViewModel.moviesData.collectLatest {
+                        when (it) {
+                            is MovieState.Loading -> {
+                                Timber.tag("search*").e("*Response: Loading")
+                            }
+                            is MovieState.Success -> {
+                                movieAdapter.submitData(it.moviesList)
+                                Timber.tag("search*").e("*Response: Success")
+                            }
+                            is MovieState.Failure -> {
+                                Timber.tag("search*").e("*Response: %s", it.error)
+                            }
+                            is MovieState.Empty -> {
+                                Timber.tag("search*").e("*Response: Empty")
+                            }
                         }
                     }
                 }
             }
+
         }
 
     }

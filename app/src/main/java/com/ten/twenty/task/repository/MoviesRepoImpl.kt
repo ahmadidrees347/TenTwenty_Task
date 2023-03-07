@@ -15,28 +15,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-class MoviesRepo(private val apiService: MoviesService) : ApiResponseRequest() {
-    fun getAllMovies(): Flow<PagingData<MovieResults>> {
-        return Pager(
-            config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = { MoviesPagingDataSource(apiService) }
-        ).flow
+class MoviesRepoImpl(private val apiService: MoviesService) : ApiResponseRequest(), MoviesRepositories {
+    override fun getAllMovies(): Flow<PagingData<MovieResults>> {
+        return Pager(config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { MoviesPagingDataSource(apiService) }).flow
     }
 
-    fun searchMoviesByQuery(query: String): Flow<PagingData<MovieResults>> {
-        return Pager(
-            config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = { SearchMoviesPagingDataSource(apiService, query) }
-        ).flow
+    override fun searchMoviesByQuery(query: String): Flow<PagingData<MovieResults>> {
+        return Pager(config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { SearchMoviesPagingDataSource(apiService, query) }).flow
     }
 
-    suspend fun getMovieDetailById(movieId: Int)
-            : Flow<MovieDetailModel?> = flow {
+    override suspend fun getMovieDetailById(movieId: Int): Flow<MovieDetailModel?> = flow {
         emit(apiRequest { apiService.getMovieDetailById(movieId) })
     }.flowOn(Dispatchers.Default)
 
-    suspend fun getMovieTrailer(movieId: Int)
-            : Flow<MovieTrailerModel?> = flow {
+    override suspend fun getMovieTrailer(movieId: Int): Flow<MovieTrailerModel?> = flow {
         emit(apiRequest { apiService.getMovieTrailer(movieId) })
     }.flowOn(Dispatchers.Default)
 
