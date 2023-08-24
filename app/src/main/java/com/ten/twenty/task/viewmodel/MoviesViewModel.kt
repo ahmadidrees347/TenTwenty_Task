@@ -2,6 +2,7 @@ package com.ten.twenty.task.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.ten.twenty.task.model.MovieDetailState
 import com.ten.twenty.task.model.MovieState
 import com.ten.twenty.task.model.MovieTrailerState
@@ -29,7 +30,7 @@ class MoviesViewModel(private val moviesRepoImpl: MoviesRepoImpl) : ViewModel() 
 
     fun getAllMovies() =
         viewModelScope.launch {
-            moviesRepoImpl.getAllMovies()
+            moviesRepoImpl.getAllMovies().cachedIn(this)
                 .onStart {
                     _moviesData.value = MovieState.Loading
                 }
@@ -43,7 +44,7 @@ class MoviesViewModel(private val moviesRepoImpl: MoviesRepoImpl) : ViewModel() 
 
     fun searchMoviesByQuery(query: String) =
         viewModelScope.launch {
-            moviesRepoImpl.searchMoviesByQuery(query)
+            moviesRepoImpl.searchMoviesByQuery(query).cachedIn(this)
                 .onStart {
                     _moviesData.value = MovieState.Loading
                 }

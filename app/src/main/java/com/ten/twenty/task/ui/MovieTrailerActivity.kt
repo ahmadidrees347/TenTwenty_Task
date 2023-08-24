@@ -2,9 +2,7 @@ package com.ten.twenty.task.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -33,29 +31,29 @@ class MovieTrailerActivity : BaseActivity<ActivityMovieTrailerBinding>() {
             moviesViewModel.getMovieTrailerById(movieId)
         }
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                moviesViewModel.moviesTrailerData.collectLatest {
-                    when (it) {
-                        is MovieTrailerState.Loading -> {
-                            Timber.tag("movieTrailer*").e("*Response: Loading")
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            moviesViewModel.moviesTrailerData.collectLatest {
+                when (it) {
+                    is MovieTrailerState.Loading -> {
+                        Timber.tag("movieTrailer*").e("*Response: Loading")
+                    }
+                    is MovieTrailerState.Success -> {
+                        Timber.tag("movieTrailer*")
+                            .e("*Response: Success : %s", it.trailerModel.id)
+                        val results = it.trailerModel.results
+                        if (results.isNotEmpty()) {
+                            initializePlayer(results[0].key)
                         }
-                        is MovieTrailerState.Success -> {
-                            Timber.tag("movieTrailer*")
-                                .e("*Response: Success : %s", it.trailerModel.id)
-                            val results = it.trailerModel.results
-                            if (results.isNotEmpty()) {
-                                initializePlayer(results[0].key)
-                            }
-                        }
-                        is MovieTrailerState.Failure -> {
-                            Timber.tag("movieTrailer*").e("*Response: %s", it.error)
-                        }
-                        is MovieTrailerState.Empty -> {
-                            Timber.tag("movieTrailer*").e("*Response: Empty")
-                        }
+                    }
+                    is MovieTrailerState.Failure -> {
+                        Timber.tag("movieTrailer*").e("*Response: %s", it.error)
+                    }
+                    is MovieTrailerState.Empty -> {
+                        Timber.tag("movieTrailer*").e("*Response: Empty")
                     }
                 }
             }
+//            }
         }
     }
 

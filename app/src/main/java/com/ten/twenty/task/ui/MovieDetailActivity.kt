@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.bumptech.glide.Glide
+import coil.load
+import com.ten.twenty.task.R
 import com.ten.twenty.task.databinding.ActivityMovieDetailBinding
 import com.ten.twenty.task.extension.Constants
 import com.ten.twenty.task.extension.openActivity
@@ -58,10 +59,15 @@ class MovieDetailActivity : BaseActivity<ActivityMovieDetailBinding>() {
 
     private fun setMovieData(movieModel: MovieDetailModel) {
         with(binding) {
-            Glide.with(this@MovieDetailActivity)
-                .load(movieModel.getUrlImage())
-                .into(imgMoviePoster)
-
+//            Glide.with(this@MovieDetailActivity)
+//                .load(movieModel.getUrlImage())
+//                .into(imgMoviePoster)
+            imgMoviePoster.load(movieModel.getUrlImage()) {
+                crossfade(true)
+                placeholder(R.drawable.ic_image_load)
+                error(R.drawable.ic_image_load)
+//                    transformations(CircleCropTransformation())
+            }
             txtMovieTitle.text = movieModel.title
             txtOverViewContent.text = movieModel.overview
             val strDate = "In theaters " + movieModel.releaseDate

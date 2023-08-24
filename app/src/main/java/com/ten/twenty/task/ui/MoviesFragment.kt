@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ten.twenty.task.adapter.MovieAdapter
 import com.ten.twenty.task.databinding.FragmentMoviesBinding
@@ -54,7 +52,7 @@ class MoviesFragment : BaseFragment() {
     private fun getAllMovies() {
         moviesViewModel.getAllMovies()
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 moviesViewModel.moviesData.collectLatest {
                     when (it) {
                         is MovieState.Loading -> {
@@ -72,7 +70,7 @@ class MoviesFragment : BaseFragment() {
                         }
                     }
                 }
-            }
+//            }
         }
     }
 }

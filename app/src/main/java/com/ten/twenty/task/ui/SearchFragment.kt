@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ten.twenty.task.adapter.MovieAdapter
 import com.ten.twenty.task.databinding.FragmentSearchBinding
@@ -53,7 +51,7 @@ class SearchFragment : BaseFragment() {
 
     private fun setListeners() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 /* mySharedViewModel.searchedMovie.observe(viewLifecycleOwner) { query ->
                      Timber.tag("movieData*").e("Search $query")
                      if (query.isNotEmpty())
@@ -85,7 +83,7 @@ class SearchFragment : BaseFragment() {
                         }
                     }
                 }
-            }
+//            }
 
         }
 

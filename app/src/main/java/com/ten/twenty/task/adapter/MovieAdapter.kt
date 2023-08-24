@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import coil.load
 import com.ten.twenty.task.R
 import com.ten.twenty.task.databinding.ItemMovieBinding
 import com.ten.twenty.task.databinding.ItemSearchMovieBinding
@@ -19,9 +18,9 @@ class MovieAdapter(
 ) : PagingDataAdapter<MovieResults, RecyclerView.ViewHolder>(ItemDiffCallback()) {
     var onMovieClick: ((model: MovieResults) -> Unit)? = null
     var isSearchItems = false
-    private val requestOptions =
-        RequestOptions().placeholder(R.drawable.ic_image_load)
-            .error(R.drawable.ic_image_load)
+//    private val requestOptions =
+//        RequestOptions().placeholder(R.drawable.ic_image_load)
+//            .error(R.drawable.ic_image_load)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -51,10 +50,17 @@ class MovieAdapter(
             with(binding) {
                 txtMovieTitle.text = model.title
                 imgMovie.setOnClickListener { onMovieClick?.invoke(model) }
-                Glide.with(context)
-                    .load(model.getUrlImage())
-                    .apply(requestOptions)
-                    .into(imgMovie)
+//                Glide.with(context)
+//                    .load(model.getUrlImage())
+//                    .apply(requestOptions)
+//                    .into(imgMovie)
+
+                imgMovie.load(model.getUrlImage()) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_image_load)
+                    error(R.drawable.ic_image_load)
+//                    transformations(CircleCropTransformation())
+                }
             }
         }
     }
@@ -66,10 +72,16 @@ class MovieAdapter(
             with(binding) {
                 txtMovieTitle.text = model.title
                 imgMovie.setOnClickListener { onMovieClick?.invoke(model) }
-                Glide.with(context)
-                    .load(model.getUrlImage())
-                    .apply(requestOptions)
-                    .into(imgMovie)
+//                Glide.with(context)
+//                    .load(model.getUrlImage())
+//                    .apply(requestOptions)
+//                    .into(imgMovie)
+                imgMovie.load(model.getUrlImage()) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_image_load)
+                    error(R.drawable.ic_image_load)
+//                    transformations(CircleCropTransformation())
+                }
             }
         }
     }
