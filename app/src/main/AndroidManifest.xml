@@ -19,21 +19,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.MovieTrailerActivity"
+            android:name=".presentation.movie_trailer.MovieTrailerActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.MovieDetailActivity"
+            android:name=".presentation.movie_detail.MovieDetailActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".presentation.MainActivity"
             android:windowSoftInputMode="adjustNothing"
             android:exported="true" >
             <intent-filter>

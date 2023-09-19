@@ -2,10 +2,11 @@ package com.ten.twenty.task.api
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.ten.twenty.task.model.MovieResults
+import com.ten.twenty.task.data.data_source.MoviesAPI
+import com.ten.twenty.task.data.data_source.dto.MovieResults
 
 class SearchMoviesPagingDataSource(
-    private val movieService: MoviesService,
+    private val movieService: MoviesAPI,
     private val query: String
 ) :
     PagingSource<Int, MovieResults>() {
