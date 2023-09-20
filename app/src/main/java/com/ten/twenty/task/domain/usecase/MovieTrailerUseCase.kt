@@ -1,19 +1,19 @@
-package com.ten.twenty.task.domain.use_case
+package com.ten.twenty.task.domain.usecase
 
-import com.ten.twenty.task.data.data_source.dto.MovieDetailModel
+import com.ten.twenty.task.data.source.dto.MovieTrailerModel
 import com.ten.twenty.task.domain.repository.MoviesRepositories
-import com.ten.twenty.task.utils.ResponseState
+import com.ten.twenty.task.data.network.ResponseState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 
-class MovieDetailUseCase(private val repository: MoviesRepositories) {
+class MovieTrailerUseCase(private val repository: MoviesRepositories) {
 
-    operator fun invoke(id: Int): Flow<ResponseState<MovieDetailModel>> = flow {
+    operator fun invoke(id: Int): Flow<ResponseState<MovieTrailerModel>> = flow {
         try {
             emit(ResponseState.Loading())
-            emit(ResponseState.Success(repository.getMovieDetailById(id)))
+            emit(ResponseState.Success(repository.getMovieTrailer(id)))
         } catch (e: HttpException) {
             emit(ResponseState.Error(e.localizedMessage ?: "An Unexpected Error"))
         } catch (e: IOException) {

@@ -1,9 +1,9 @@
 package com.ten.twenty.task.domain.repository
 
 import androidx.paging.PagingData
-import com.ten.twenty.task.data.data_source.dto.MovieDetailModel
-import com.ten.twenty.task.data.data_source.dto.MovieResults
-import com.ten.twenty.task.data.data_source.dto.MovieTrailerModel
+import com.ten.twenty.task.data.source.dto.MovieDetailModel
+import com.ten.twenty.task.data.source.dto.MovieResults
+import com.ten.twenty.task.data.source.dto.MovieTrailerModel
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepositories {

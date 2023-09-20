@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.ten.twenty.task.R
-import com.ten.twenty.task.data.data_source.dto.MovieDetailModel
+import com.ten.twenty.task.data.source.dto.MovieDetailModel
 import com.ten.twenty.task.databinding.ActivityMovieDetailBinding
 import com.ten.twenty.task.presentation.BaseActivity
 import com.ten.twenty.task.presentation.movie_trailer.MovieTrailerActivity

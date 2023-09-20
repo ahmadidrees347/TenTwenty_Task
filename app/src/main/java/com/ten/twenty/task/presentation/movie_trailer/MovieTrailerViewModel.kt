@@ -2,8 +2,8 @@ package com.ten.twenty.task.presentation.movie_trailer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ten.twenty.task.domain.use_case.MovieTrailerUseCase
-import com.ten.twenty.task.utils.ResponseState
+import com.ten.twenty.task.domain.usecase.MovieTrailerUseCase
+import com.ten.twenty.task.data.network.ResponseState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

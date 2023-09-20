@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.ten.twenty.task.R
-import com.ten.twenty.task.data.data_source.dto.MovieResults
+import com.ten.twenty.task.data.source.dto.MovieResults
 import com.ten.twenty.task.databinding.ItemMovieBinding
 import com.ten.twenty.task.databinding.ItemSearchMovieBinding
 

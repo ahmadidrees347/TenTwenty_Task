@@ -1,9 +1,9 @@
-package com.ten.twenty.task.data.data_source
+package com.ten.twenty.task.data.source
 
-import com.ten.twenty.task.api.OkHttpProvider
-import com.ten.twenty.task.data.data_source.dto.MovieDetailModel
-import com.ten.twenty.task.data.data_source.dto.MovieModel
-import com.ten.twenty.task.data.data_source.dto.MovieTrailerModel
+import com.ten.twenty.task.data.network.OkHttpProvider
+import com.ten.twenty.task.data.source.dto.MovieDetailModel
+import com.ten.twenty.task.data.source.dto.MovieModel
+import com.ten.twenty.task.data.source.dto.MovieTrailerModel
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

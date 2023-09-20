@@ -1,4 +1,4 @@
-package com.ten.twenty.task.data.data_source.dto
+package com.ten.twenty.task.data.source.dto
 
 import com.google.gson.annotations.SerializedName
 import com.ten.twenty.task.utils.Constants

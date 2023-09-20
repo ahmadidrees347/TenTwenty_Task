@@ -1,4 +1,4 @@
-package com.ten.twenty.task.utils
+package com.ten.twenty.task.data.network
 
 sealed class ResponseState<T>(val data: T? = null, val message: String? = null) {
     class Loading<T>(data: T? = null) : ResponseState<T>(data)

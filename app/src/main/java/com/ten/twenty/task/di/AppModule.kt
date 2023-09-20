@@ -1,10 +1,10 @@
 package com.ten.twenty.task.di
 
-import com.ten.twenty.task.data.data_source.MoviesAPI
+import com.ten.twenty.task.data.source.MoviesAPI
 import com.ten.twenty.task.data.repository.MoviesRepoImpl
 import com.ten.twenty.task.domain.repository.MoviesRepositories
-import com.ten.twenty.task.domain.use_case.MovieDetailUseCase
-import com.ten.twenty.task.domain.use_case.MovieTrailerUseCase
+import com.ten.twenty.task.domain.usecase.MovieDetailUseCase
+import com.ten.twenty.task.domain.usecase.MovieTrailerUseCase
 import com.ten.twenty.task.presentation.movie_detail.MovieDetailViewModel
 import com.ten.twenty.task.presentation.movie_trailer.MovieTrailerViewModel
 import com.ten.twenty.task.presentation.viewmodel.MoviesViewModel

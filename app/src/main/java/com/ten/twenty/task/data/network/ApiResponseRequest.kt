@@ -1,4 +1,4 @@
-package com.ten.twenty.task.utils
+package com.ten.twenty.task.data.network
 
 import retrofit2.Response
 

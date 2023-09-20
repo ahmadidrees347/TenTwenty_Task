@@ -1,9 +1,8 @@
-package com.ten.twenty.task.api
+package com.ten.twenty.task.data.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.ten.twenty.task.data.data_source.MoviesAPI
-import com.ten.twenty.task.data.data_source.dto.MovieResults
+import com.ten.twenty.task.data.source.dto.MovieResults
 
 class SearchMoviesPagingDataSource(
     private val movieService: MoviesAPI,

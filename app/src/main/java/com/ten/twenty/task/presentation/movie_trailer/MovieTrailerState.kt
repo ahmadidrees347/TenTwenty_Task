@@ -1,6 +1,6 @@
 package com.ten.twenty.task.presentation.movie_trailer
 
-import com.ten.twenty.task.data.data_source.dto.MovieTrailerModel
+import com.ten.twenty.task.data.source.dto.MovieTrailerModel
 
 data class MovieTrailerState(
     var isLoading: Boolean = false,
