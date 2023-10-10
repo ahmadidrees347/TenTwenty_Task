@@ -3,8 +3,8 @@ package com.ten.twenty.task.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.ten.twenty.task.data.source.MoviesPagingDataSource
-import com.ten.twenty.task.data.source.SearchMoviesPagingDataSource
+import com.ten.twenty.task.data.source.paging.MoviesPaging
+import com.ten.twenty.task.data.source.paging.SearchMoviesPaging
 import com.ten.twenty.task.data.source.MoviesAPI
 import com.ten.twenty.task.data.source.dto.MovieDetailModel
 import com.ten.twenty.task.data.source.dto.MovieResults
@@ -16,12 +16,12 @@ import kotlinx.coroutines.flow.Flow
 class MoviesRepoImpl(private val apiService: MoviesAPI) : ApiResponseRequest(), MoviesRepositories {
     override fun getAllMovies(): Flow<PagingData<MovieResults>> {
         return Pager(config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = { MoviesPagingDataSource(apiService) }).flow
+            pagingSourceFactory = { MoviesPaging(apiService) }).flow
     }
 
     override fun searchMoviesByQuery(query: String): Flow<PagingData<MovieResults>> {
         return Pager(config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = { SearchMoviesPagingDataSource(apiService, query) }).flow
+            pagingSourceFactory = { SearchMoviesPaging(apiService, query) }).flow
     }
 
     override suspend fun getMovieDetailById(movieId: Int): MovieDetailModel =

@@ -1,3 +1,5 @@
+### Movie App (TMdb) with Clean Architecture & Kotlin-Flow
+
 ### It is an app that lists all upcoming movies using The Movie Db API (TMdb) and then navigate to book movie tickets.
 1. Movie List Screen: List down all upcoming movies on the list 					
 Movie List API: https://api.themoviedb.org/3/movie/upcoming

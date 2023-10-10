@@ -1,11 +1,14 @@
-package com.ten.twenty.task.data.source
+package com.ten.twenty.task.data.source.paging
 
-import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.ten.twenty.task.data.source.MoviesAPI
 import com.ten.twenty.task.data.source.dto.MovieResults
 
-class MoviesPagingDataSource(private val movieService: MoviesAPI) :
-    PagingSource<Int, MovieResults>() {
+class SearchMoviesPaging(
+    private val movieService: MoviesAPI,
+    private val query: String
+) :
+    PagingDataSource<MovieResults>() {
 
     companion object {
         private const val STARTING_PAGE_INDEX = 1
@@ -14,7 +17,7 @@ class MoviesPagingDataSource(private val movieService: MoviesAPI) :
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResults> {
         val page = params.key ?: STARTING_PAGE_INDEX
         return try {
-            val response = movieService.getAllUpcomingMovies(page)
+            val response = movieService.searchMoviesByQuery(page, query)
             val results = response.body()?.results ?: emptyList()
             LoadResult.Page(
                 data = results,
@@ -25,7 +28,6 @@ class MoviesPagingDataSource(private val movieService: MoviesAPI) :
             return LoadResult.Error(exception)
         }
     }
-
 
     override fun getRefreshKey(state: PagingState<Int, MovieResults>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
